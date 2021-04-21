@@ -1,1 +1,1 @@
-from .bundle import MongoDbBundle
+from .bundle import MongoDBBundle, MongoDBContainer
