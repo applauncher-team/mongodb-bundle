@@ -1,4 +1,3 @@
-from applauncher.event import ConfigurationReadyEvent
 from pymongo import MongoClient
 from pydantic import BaseModel
 from dependency_injector import containers, providers
@@ -26,14 +25,4 @@ class MongoDBBundle:
             "mongodb": MongoDBConfig
         }
 
-        self.event_listeners = [
-            (ConfigurationReadyEvent, self.config_ready),
-        ]
-
-        self.injection_bindings = {
-
-        }
-
-    def config_ready(self, event):
-        self.injection_bindings["mongodb"] = MongoDBContainer(config=event.configuration.mongodb)
-
+        self.injection_bindings = {"mongodb": MongoDBContainer}
