@@ -9,6 +9,10 @@ class MongoDBConfig(BaseModel):
     connect: bool = True
 
 
+def get_default_database(client: MongoClient):
+    return client.get_default_database()
+
+
 class MongoDBContainer(containers.DeclarativeContainer):
     config = providers.Dependency(instance_of=MongoDBConfig)
     configuration = Configuration()
@@ -16,6 +20,11 @@ class MongoDBContainer(containers.DeclarativeContainer):
         MongoClient,
         host=configuration.provided.mongodb.uri,
         connect=configuration.provided.mongodb.connect
+    )
+
+    db = providers.Callable(
+        get_default_database,
+        mongo_client
     )
 
 
